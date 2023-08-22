@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Enviar peticion</h1>
+
+    <form method="post">
+        {% csrf_token%}
+        <label for="encabezado">Asunto:</label>
+        <input type="text" name="encabezado"><br>
+        <label for="mensaje">Mensaje :</label>
+        <textarea name="mensaje" cols="30" rows="10"></textarea><br>
+        <label for="recipiente">Email de destino:</label>
+        <input type="email" name="recipiente"><br>
+        <button type="submit"> Enviar</button>
+    </form>
+</body>
+</html>

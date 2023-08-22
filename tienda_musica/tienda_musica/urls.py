@@ -16,18 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from tienda_gestion.views import crear_artista, exportar_artistas, consultar_artistas_album, enviar_correo, subida_archivo
+from tienda_gestion.views import crear_artista, exportar_artistas, consultar_artistas_album, send_email, upload_file
+# agregar para manejo de archivos
 from django.conf import settings
 from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('crear_artista/', crear_artista, name='crear-artista'),
     path('exportar/', exportar_artistas, name='exportar'),
     path('consulta/', consultar_artistas_album, name='consulta'),
-    path('email/', enviar_correo, name='envio_correo'),
-    path('archivo/', subida_archivo, name = 'subir_archivo')
-] 
+    path('email/', send_email, name='send email'),
+    path('upload/', upload_file, name='upload_file')
+]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
-
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

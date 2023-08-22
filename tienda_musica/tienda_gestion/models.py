@@ -27,9 +27,9 @@ class AlbumArte(models.Model):
     album = models.OneToOneField(Album, on_delete=models.CASCADE)
 
 
-class Archivo(models.Model):
-    archivo = models.FileField(upload_to='descargas/')
-    fecha_subida = models.DateTimeField(auto_now_add=True)
+class UploadedFile(models.Model):
+    file = models.FileField(upload_to='uploads/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
     
 

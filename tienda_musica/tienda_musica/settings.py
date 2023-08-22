@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9q1=znq*l#8puw1&w2b3h(tovq9up21g@1tr3+h$p(1y$+*y4!'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOST").split(" ")
 
 
 # Application definition
@@ -79,13 +79,17 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'musica',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
+        'USER': 'musica_user',
+        'PASSWORD': 'CoPFD92Kavr619Qt1e9XqwswFLFXaB0i',
+        'HOST': 'postgres://musica_user:CoPFD92Kavr619Qt1e9XqwswFLFXaB0i@dpg-cjij1fvjbvhs73aj806g-a.oregon-postgres.render.com/musica',
         'PORT': '5432',
     }
 }
 
+database_url = os.environ.get("DATABASE_URL")
+
+DATABASES['default'] = dj_database_url.parse(database_url)
+#postgres://musica_user:CoPFD92Kavr619Qt1e9XqwswFLFXaB0i@dpg-cjij1fvjbvhs73aj806g-a.oregon-postgres.render.com/musica
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -128,16 +132,14 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# email settings
-
+#email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp-mail.outlook.com'
-EMAIL_HOST_USER = 'joshuaawake@outlook.com'
-EMAIL_HOST_PASSWORD = '-NhtD*3Q7uC44g9'
+EMAIL_HOST_USER = 'joshuamht@outlook.com'
+EMAIL_HOST_PASSWORD = 'Junoadel45-'
 EMAIL_PORT = 25
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-# MEDIA
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

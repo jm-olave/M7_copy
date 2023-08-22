@@ -26,17 +26,6 @@ class AlbumArte(models.Model):
     descripcion = models.TextField(max_length=500, default=None)
     album = models.OneToOneField(Album, on_delete=models.CASCADE)
 
-
-class Archivo(models.Model):
-    archivo = models.FileField(upload_to='descargas/')
-    fecha_subida = models.DateTimeField(auto_now_add=True)
-
-class Item(models.Model):
-    nombre = models.CharField(max_length=50)
-    votos =  models.PositiveIntegerField(default=0)
-
-    def __str__(self) -> str:
-        return self.nombre
     
 
 

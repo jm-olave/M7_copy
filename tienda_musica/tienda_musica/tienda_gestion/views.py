@@ -1,11 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .models import *
 from django.db import connection
 import csv
 from django.http import HttpResponse
 from django.core.mail import EmailMessage, get_connection
 from django.conf import settings
-from .forms import ArchivoForm
 # Create your views here.
 
 def crear_artista(request):
@@ -42,11 +41,7 @@ def consultar_artistas_album(request):
 
 # enviar correo
 def enviar_correo(request):
-    if request.method == 'POST':
-        encabezado = request.POST.get('encabezado')
-        mensaje = request.POST.get('mensaje')
-        recipiente = request.POST.get('recipiente')
-        print( "correo", recipiente)
+    if request.method == 'GET':
         with get_connection(
             host=settings.EMAIL_HOST,
             port=settings.EMAIL_PORT,
@@ -54,31 +49,9 @@ def enviar_correo(request):
             password=settings.EMAIL_HOST_PASSWORD,
             use_tls = settings.EMAIL_USE_TLS
         ) as conexion:
+            encabezado = "Esto es otro test desde el views"
+            cuerpo = "este es el cuerpo de mi correo test"
             remitente = settings.EMAIL_HOST_USER
-            recipiente_lista = [recipiente]
-            EmailMessage(encabezado, mensaje, remitente, recipiente_lista, connection=conexion).send()
-    return render(request, 'tienda_gestion/contacto.html')
-
-
-# metodo de archivo
-
-def subida_archivo(request):
-    if request.method == 'POST':
-        form = ArchivoForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('consulta')
-    else:
-        form = ArchivoForm()
-    return render(request, 'tienda_gestion/subida_archivo.html', {'form':form})
-
-def index(request):
-    items = Item.objects.all()
-    return render(request, 'tienda_gestion/index.html', {'items': items})
-
-
-def votar_item(request, item_id):
-    item = Item.objects.get(pk=item_id)
-    item.votos +=1
-    item.save()
-    return redirect('index')
+            recipiente = ["joshuamht@outlook.com",] 
+            EmailMessage(encabezado, cuerpo, remitente, recipiente, connection=conexion).send()
+    return HttpResponse('<h1> Correo enviado!!!</h1>')
